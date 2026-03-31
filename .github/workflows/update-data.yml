@@ -1,0 +1,45 @@
+name: Atualizar SQL das Loterias
+
+on:
+  schedule:
+    - cron: '0 12 * * *'   # todo dia às 9h Brasília (12h UTC)
+  workflow_dispatch:         # permite rodar manualmente
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # necessário para upload na release
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instalar PHP
+        run: sudo apt-get install -y php-cli
+
+      - name: Baixar SQLs atuais da release
+        run: |
+          mkdir -p loterias
+          for f in megasena lotofacil quina lotomania timemania duplasena diadesorte supersete maismilionaria; do
+            echo "⬇️  Baixando $f.sql..."
+            curl -L --silent --output "loterias/$f.sql" \
+              "https://github.com/dantetesta/LotoLogic/releases/download/data/$f.sql"
+            SIZE=$(du -sh "loterias/$f.sql" | cut -f1)
+            echo "   $f.sql → $SIZE"
+          done
+
+      - name: Rodar atualização incremental
+        run: php atualizar-sql.php
+
+      - name: Subir SQLs atualizados na release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for f in loterias/*.sql; do
+            filename=$(basename "$f")
+            SIZE=$(du -sh "$f" | cut -f1)
+            echo "⬆️  Enviando $filename ($SIZE)..."
+            gh release upload data "$f" --clobber --repo dantetesta/LotoLogic
+          done
+          echo "✅ Todos os SQLs atualizados na release data"
