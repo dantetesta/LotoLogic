@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://lotologic.com.br/logo-lotologic.png" width="180" alt="LotoLogic Logo" />
+  <img src="https://lotologic.com.br/icone-app.png" width="120" alt="LotoLogic" />
 </p>
 
 <h1 align="center">LotoLogic</h1>
