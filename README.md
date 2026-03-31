@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://dantetesta.com.br/lotolab/loteria-logo.png" width="180" alt="LotoLogic Logo" />
+  <img src="https://lotologic.com.br/logo-lotologic.png" width="180" alt="LotoLogic Logo" />
 </p>
 
 <h1 align="center">LotoLogic</h1>
