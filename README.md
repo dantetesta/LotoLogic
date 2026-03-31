@@ -84,11 +84,25 @@ Mega-Sena · Lotofácil · Quina · Lotomania · Timemania · Dupla Sena · Dia 
 
 ## 📖 O que é o LotoLogic?
 
-O **LotoLogic** é um aplicativo desktop para Windows, macOS e Linux que transforma dados históricos das loterias da CAIXA em análises inteligentes. Com **mais de 2.990 concursos** armazenados localmente e uma engine com **mais de 20 algoritmos matemáticos**, ele é a ferramenta definitiva para quem aposta com estratégia.
+Se você já aposta nas loterias da CAIXA e quer **entender melhor os dados históricos** antes de escolher suas dezenas, o LotoLogic foi feito para você.
 
-Tudo roda **100% no seu computador** — sem mensalidade, sem servidores externos, sem cadastro. Seus dados nunca saem da sua máquina.
+O app organiza e analisa o histórico completo de **mais de 23.261 concursos** entre as 9 loterias suportadas — tudo armazenado localmente no seu computador, sem internet, sem mensalidade, sem cadastro.
 
-> **Aposte com estratégia, não no chute.**
+**O que o LotoLogic faz:**
+- Mostra quais dezenas saíram mais ou menos vezes em cada loteria
+- Identifica padrões de atraso, frequência e distribuição nos sorteios históricos
+- Gera combinações com base em diferentes critérios matemáticos e estatísticos
+- Permite organizar, salvar e acompanhar seus próprios jogos
+- Conta com uma IA para tirar dúvidas sobre as análises
+
+**O que o LotoLogic NÃO faz:**
+- Não prevê resultados futuros — nenhum software consegue isso
+- Não garante lucro ou premiação — loterias são jogos de azar por natureza
+- Não tem acesso à sua conta da CAIXA ou realiza apostas automáticas
+
+> O LotoLogic é uma ferramenta de análise. As decisões de aposta são sempre suas.
+
+Tudo roda **100% no seu computador** — sem servidores externos. Seus dados nunca saem da sua máquina.
 
 ---
 
