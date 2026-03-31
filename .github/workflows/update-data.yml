@@ -2,7 +2,7 @@ name: Atualizar SQL das Loterias
 
 on:
   schedule:
-    - cron: '0 12 * * *'   # todo dia às 9h Brasília (12h UTC)
+    - cron: '59 2 * * *'   # todo dia às 23h59 Brasília (02h59 UTC)
   workflow_dispatch:         # permite rodar manualmente
 
 jobs:
