@@ -36,6 +36,46 @@
 
 ---
 
+## ⚠️ Solução de Problemas na Instalação
+
+### macOS — "LotoLogic.app está danificado e não pode ser aberto"
+
+Esse erro é causado pelo Gatekeeper do macOS porque o app não possui assinatura paga da Apple. É seguro ignorar. Para resolver:
+
+**1. Remova o atributo de quarentena antes de instalar:**
+
+```bash
+xattr -cr ~/Downloads/LotoLogic_4.2.6_aarch64.dmg
+```
+
+Depois abra o DMG normalmente e arraste para Applications.
+
+**2. Ou, se já arrastou para Applications:**
+
+```bash
+xattr -cr /Applications/LotoLogic.app
+```
+
+**3. Alternativa visual (sem Terminal):**
+- Clique com o botão **direito** no app → **Abrir** → confirmar **Abrir** no diálogo
+
+---
+
+### Windows — "Windows protegeu seu PC" (SmartScreen)
+
+Clique em **Mais informações** → **Executar assim mesmo**.
+
+---
+
+### Linux AppImage — permissão de execução
+
+```bash
+chmod +x LotoLogic_4.2.6_amd64.AppImage
+./LotoLogic_4.2.6_amd64.AppImage
+```
+
+---
+
 ## 🎰 Loterias Suportadas
 
 Mega-Sena · Lotofácil · Quina · Lotomania · Timemania · Dupla Sena · Dia de Sorte · Super Sete · +Milionária · Loteca · Loteria Federal
