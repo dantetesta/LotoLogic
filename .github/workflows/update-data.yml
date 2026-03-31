@@ -12,9 +12,6 @@ jobs:
       contents: write        # necessário para upload na release
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Instalar PHP
         run: sudo apt-get install -y php-cli
 
@@ -22,15 +19,117 @@ jobs:
         run: |
           mkdir -p loterias
           for f in megasena lotofacil quina lotomania timemania duplasena diadesorte supersete maismilionaria; do
-            echo "⬇️  Baixando $f.sql..."
+            echo "Baixando $f.sql..."
             curl -L --silent --output "loterias/$f.sql" \
               "https://github.com/dantetesta/LotoLogic/releases/download/data/$f.sql"
-            SIZE=$(du -sh "loterias/$f.sql" | cut -f1)
-            echo "   $f.sql → $SIZE"
+            echo "  $(du -sh loterias/$f.sql | cut -f1)"
           done
 
-      - name: Rodar atualização incremental
-        run: php atualizar-sql.php
+      - name: Atualizar concursos novos
+        run: |
+          php -r "
+          \$API_BASE = 'https://loteriascaixa-api.herokuapp.com/api';
+          \$OUTPUT_DIR = 'loterias';
+          \$DELAY_MS = 200;
+
+          \$LOTERIAS = [
+            ['type'=>'megasena',       'api'=>'megasena'],
+            ['type'=>'lotofacil',      'api'=>'lotofacil'],
+            ['type'=>'quina',          'api'=>'quina'],
+            ['type'=>'lotomania',      'api'=>'lotomania'],
+            ['type'=>'maismilionaria', 'api'=>'maismilionaria'],
+            ['type'=>'duplasena',      'api'=>'duplasena'],
+            ['type'=>'timemania',      'api'=>'timemania'],
+            ['type'=>'diadesorte',     'api'=>'diadesorte'],
+            ['type'=>'supersete',      'api'=>'supersete'],
+          ];
+
+          function fetch_json(\$url) {
+            \$ctx = stream_context_create(['http'=>['timeout'=>30,'header'=>'User-Agent: LotoLogic-Updater/1.0\r\n']]);
+            \$json = @file_get_contents(\$url, false, \$ctx);
+            return \$json ? json_decode(\$json, true) : null;
+          }
+
+          function escape_sql(\$val) {
+            if (\$val === null) return 'NULL';
+            return \"'\" . str_replace(\"'\", \"''\", (string)\$val) . \"'\";
+          }
+
+          function get_last_contest(\$filepath) {
+            if (!file_exists(\$filepath)) return 0;
+            \$content = file_get_contents(\$filepath);
+            if (preg_match('/last_imported_contest\s*=\s*(\d+)/', \$content, \$m)) return (int)\$m[1];
+            preg_match_all('/VALUES\s*\([^,]+,\s*(\d+)\s*,/', \$content, \$m);
+            return !empty(\$m[1]) ? (int)max(\$m[1]) : 0;
+          }
+
+          function contest_to_sql(\$game_type, \$c) {
+            \$concurso = (int)\$c['concurso'];
+            \$dezenas = \$c['dezenas'] ?? [];
+            \$dezenasOrdem = \$c['dezenasOrdemSorteio'] ?? \$dezenas;
+            \$nums = array_map('intval', \$dezenas); sort(\$nums);
+            \$nums_draw = array_map('intval', \$dezenasOrdem);
+            \$acumulou = !empty(\$c['acumulou']) ? 1 : 0;
+            \$trevos = \$c['trevosSorteados'] ?? \$c['trevos'] ?? [];
+            \$trevos_json = !empty(\$trevos) ? escape_sql(json_encode(\$trevos)) : 'NULL';
+            \$time_coracao = \$c['timeCoracao'] ?? \$c['nomeTimeCoracao'] ?? null;
+            \$time_coracao = (\$time_coracao && trim(\$time_coracao) !== '') ? escape_sql(\$time_coracao) : 'NULL';
+            \$mes_sorte = \$c['mesSorte'] ?? \$c['nomesMesDaSorte'] ?? null;
+            \$mes_sorte = (\$mes_sorte && trim(\$mes_sorte) !== '') ? escape_sql(\$mes_sorte) : 'NULL';
+            \$nums_text = implode(', ', array_map(fn(\$n) => str_pad(\$n,2,'0',STR_PAD_LEFT), \$nums));
+            \$sql = 'INSERT OR IGNORE INTO contests (game_type,contest_number,contest_date,location,numbers_draw_order_json,numbers_sorted_json,numbers_sorted_text,accumulated,next_contest_number,next_contest_date,estimated_next_prize,amount_collected,raw_json,trevos_json,time_coracao,mes_sorte) VALUES (';
+            \$sql .= escape_sql(\$game_type).',';
+            \$sql .= \$concurso.',';
+            \$sql .= escape_sql(\$c['data'] ?? '').',';
+            \$sql .= (\$c['local'] ?? \$c['localSorteio'] ?? null ? escape_sql(\$c['local'] ?? \$c['localSorteio']) : 'NULL').',';
+            \$sql .= escape_sql(json_encode(\$nums_draw)).',';
+            \$sql .= escape_sql(json_encode(\$nums)).',';
+            \$sql .= escape_sql(\$nums_text).',';
+            \$sql .= \$acumulou.',';
+            \$sql .= (\$c['proximoConcurso'] ?? null) !== null ? (int)\$c['proximoConcurso'] : 'NULL'; \$sql .= ',';
+            \$sql .= (\$c['dataProximoConcurso'] ?? null) ? escape_sql(\$c['dataProximoConcurso']) : 'NULL'; \$sql .= ',';
+            \$sql .= (\$c['valorEstimadoProximoConcurso'] ?? null) !== null ? (float)\$c['valorEstimadoProximoConcurso'] : 'NULL'; \$sql .= ',';
+            \$sql .= (\$c['valorArrecadado'] ?? null) !== null ? (float)\$c['valorArrecadado'] : 'NULL'; \$sql .= ',';
+            \$sql .= escape_sql(json_encode(\$c, JSON_UNESCAPED_UNICODE)).',';
+            \$sql .= \$trevos_json.',';
+            \$sql .= \$time_coracao.',';
+            \$sql .= \$mes_sorte.');';
+            foreach (\$c['premiacoes'] ?? \$c['premiacao'] ?? [] as \$p) {
+              \$sql .= '\nINSERT OR IGNORE INTO contest_prizes (contest_id,description,range_number,winners_count,prize_value) SELECT id,'.escape_sql(\$p['descricao']??null).','.(\$p['faixa']??null !== null?(int)\$p['faixa']:'NULL').','.(int)(\$p['ganhadores']??0).','.(float)(\$p['valorPremio']??0).' FROM contests WHERE game_type='.escape_sql(\$game_type).' AND contest_number='.\$concurso.';';
+            }
+            return \$sql;
+          }
+
+          \$total_new = 0;
+          foreach (\$LOTERIAS as \$lot) {
+            \$type = \$lot['type']; \$api = \$lot['api'];
+            \$filepath = \"\$OUTPUT_DIR/\$type.sql\";
+            \$local_last = get_last_contest(\$filepath);
+            \$latest = fetch_json(\"\$API_BASE/\$api/latest\");
+            if (!\$latest || !isset(\$latest['concurso'])) { echo \"[ERRO] \$type: API indisponivel\n\"; continue; }
+            \$remote_last = (int)\$latest['concurso'];
+            echo \"\$type: local=#\$local_last api=#\$remote_last\n\";
+            if (\$local_last >= \$remote_last) { echo \"  ja atualizado\n\"; continue; }
+            \$missing = \$remote_last - \$local_last;
+            echo \"  faltam \$missing concursos...\n\";
+            \$new_sql = '\n-- Atualizacao: '.date('Y-m-d H:i:s').'\n';
+            \$imported = 0;
+            for (\$n = \$local_last + 1; \$n <= \$remote_last; \$n++) {
+              \$contest = fetch_json(\"\$API_BASE/\$api/\$n\");
+              if (!\$contest || !isset(\$contest['concurso'])) continue;
+              \$new_sql .= contest_to_sql(\$type, \$contest).'\n';
+              \$imported++;
+              usleep(\$DELAY_MS * 1000);
+            }
+            \$new_sql .= \"\nUPDATE sync_state SET last_imported_contest=\$remote_last,last_synced_at=datetime('now') WHERE game_type='\$type';\n\";
+            \$content = file_get_contents(\$filepath);
+            \$content = preg_replace('/\nUPDATE sync_state SET last_imported_contest=\d+.*WHERE game_type=\\''.preg_quote(\$type,'/').'\\';?\s*$/', '', \$content);
+            file_put_contents(\$filepath, \$content.\$new_sql);
+            echo \"  +\$imported concursos adicionados\n\";
+            \$total_new += \$imported;
+          }
+          echo \"Total: \$total_new novos concursos\n\";
+          "
 
       - name: Subir SQLs atualizados na release
         env:
@@ -38,8 +137,7 @@ jobs:
         run: |
           for f in loterias/*.sql; do
             filename=$(basename "$f")
-            SIZE=$(du -sh "$f" | cut -f1)
-            echo "⬆️  Enviando $filename ($SIZE)..."
+            echo "Enviando $filename ($(du -sh $f | cut -f1))..."
             gh release upload data "$f" --clobber --repo dantetesta/LotoLogic
           done
-          echo "✅ Todos os SQLs atualizados na release data"
+          echo "Concluido"
