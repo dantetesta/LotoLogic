@@ -473,10 +473,18 @@ O LotoLogic é desenvolvido de forma independente, com muito café e muitas hora
 ## 📋 Changelog
 
 ### v4.2.7
-- Preços das apostas atualizados conforme tabela CAIXA 2026 (reajuste julho/2025)
-- Super Sete: range estendido de 15 para 21 dezenas
-- Dia de Sorte: fórmula de preços corrigida para cálculo exato
-- Mecanismo de atualização de preços padrão melhorado (preserva customizações do usuário)
+- Site oficial **lotologic.com.br** adicionado à página de Créditos
+- Link direto para o **repositório GitHub** nos Créditos
+- Página de Créditos redesenhada em grid 2×2 (Site, GitHub, Academy, Telegram)
+- Arquivos SQL migrados para GitHub CDN (independente do servidor pessoal)
+- Atualização automática dos SQLs via GitHub Actions todo dia às 23h59
+
+### v4.2.6
+- **Preços CAIXA 2026** atualizados com reajuste de julho/2025
+- Mega-Sena, Lotofácil, Quina, Dupla Sena, Dia de Sorte e Super Sete revisados
+- Super Sete: range estendido até 21 dezenas
+- Novo **ícone do app** com identidade visual LotoLogic
+- Atualização automática de preços em instalações existentes (sem perder customizações)
 
 ### v4.2.5
 - Rebranding completo: LotoLab → **LotoLogic**, novo logo e ícone
