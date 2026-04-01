@@ -509,7 +509,7 @@ O LotoLogic é desenvolvido de forma independente, com muito café e muitas hora
 ---
 
 <div align="center">
-  <img src="https://lotologic.com.br/social-lotolab.jpg" width="600" alt="LotoLogic" />
+  <img src="https://lotologic.com.br/social-image.png" width="600" alt="LotoLogic" />
 </div>
 
 ---
