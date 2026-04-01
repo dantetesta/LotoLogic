@@ -518,7 +518,9 @@ O LotoLogic é desenvolvido de forma independente, com muito café e muitas hora
 
 ## 👨‍💻 Sobre o Autor
 
-**Dante Testa** — Desenvolvedor, empreendedor digital e entusiasta de loterias.
+**Dante Testa** — Desenvolvedor, especialista em WordPress e IA, curioso de plantão.
+
+Trabalho com desenvolvimento web e Inteligência Artificial — minha missão é usar tecnologia para resolver problemas reais e ensinar outras pessoas a fazerem o mesmo. O LotoLogic nasceu dessa curiosidade: será que dá pra aplicar análise de dados e IA num tema tão humano quanto a sorte? Aparentemente dá. 😄
 
 Se o LotoLogic te ajudou, me siga nas redes — isso ajuda muito a manter o projeto vivo e crescendo! 🙏
 
