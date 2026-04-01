@@ -6,7 +6,7 @@
   <p><strong>O laboratório de análise de loterias da CAIXA mais completo para apostadores sérios.</strong><br/>
   Dados reais · Algoritmos profissionais · Inteligência Artificial · 100% local</p>
 
-  <img src="https://img.shields.io/badge/versão-4.2.6-blue?style=flat-square" />
+  <img src="https://img.shields.io/badge/versão-4.2.7-blue?style=flat-square" />
   <img src="https://img.shields.io/badge/plataforma-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey?style=flat-square" />
   <img src="https://img.shields.io/badge/licença-MIT-green?style=flat-square" />
 </div>
@@ -23,16 +23,16 @@
 
 | Plataforma | Instalador | Tipo |
 |---|---|---|
-| 🪟 **Windows 10/11** | [LotoLogic_4.2.6_x64-setup.exe](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.6/LotoLogic_4.2.6_x64-setup.exe) | Setup (recomendado) |
-| 🪟 **Windows 10/11** | [LotoLogic_4.2.6_x64_en-US.msi](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.6/LotoLogic_4.2.6_x64_en-US.msi) | MSI |
-| 🍎 **macOS Apple Silicon** (M1/M2/M3/M4) | [LotoLogic_4.2.6_aarch64.dmg](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.6/LotoLogic_4.2.6_aarch64.dmg) | DMG |
-| 🍎 **macOS Intel** | [LotoLogic_4.2.6_x64.dmg](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.6/LotoLogic_4.2.6_x64.dmg) | DMG |
-| 🐧 **Linux** (Ubuntu, Debian, Mint...) | [LotoLogic_4.2.6_amd64.deb](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.6/LotoLogic_4.2.6_amd64.deb) | .deb |
-| 🐧 **Linux** (qualquer distribuição) | [LotoLogic_4.2.6_amd64.AppImage](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.6/LotoLogic_4.2.6_amd64.AppImage) | AppImage |
+| 🪟 **Windows 10/11** | [LotoLogic_4.2.7_x64-setup.exe](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.7/LotoLogic_4.2.7_x64-setup.exe) | Setup (recomendado) |
+| 🪟 **Windows 10/11** | [LotoLogic_4.2.7_x64_en-US.msi](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.7/LotoLogic_4.2.7_x64_en-US.msi) | MSI |
+| 🍎 **macOS Apple Silicon** (M1/M2/M3/M4) | [LotoLogic_4.2.7_aarch64.dmg](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.7/LotoLogic_4.2.7_aarch64.dmg) | DMG |
+| 🍎 **macOS Intel** | [LotoLogic_4.2.7_x64.dmg](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.7/LotoLogic_4.2.7_x64.dmg) | DMG |
+| 🐧 **Linux** (Ubuntu, Debian, Mint...) | [LotoLogic_4.2.7_amd64.deb](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.7/LotoLogic_4.2.7_amd64.deb) | .deb |
+| 🐧 **Linux** (qualquer distribuição) | [LotoLogic_4.2.7_amd64.AppImage](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.7/LotoLogic_4.2.7_amd64.AppImage) | AppImage |
 
 > 💡 **Mac:** No menu Apple → "Sobre este Mac" — se aparecer "Apple M..." baixe Silicon. Se aparecer "Intel" baixe a versão Intel.
 >
-> 🐧 **Linux AppImage:** `chmod +x LotoLogic_4.2.6_amd64.AppImage && ./LotoLogic_4.2.6_amd64.AppImage`
+> 🐧 **Linux AppImage:** `chmod +x LotoLogic_4.2.7_amd64.AppImage && ./LotoLogic_4.2.7_amd64.AppImage`
 
 ---
 
@@ -45,7 +45,7 @@ Esse erro é causado pelo Gatekeeper do macOS porque o app não possui assinatur
 **1. Remova o atributo de quarentena antes de instalar:**
 
 ```bash
-xattr -cr ~/Downloads/LotoLogic_4.2.6_aarch64.dmg
+xattr -cr ~/Downloads/LotoLogic_4.2.7_aarch64.dmg
 ```
 
 Depois abra o DMG normalmente e arraste para Applications.
@@ -70,8 +70,8 @@ Clique em **Mais informações** → **Executar assim mesmo**.
 ### Linux AppImage — permissão de execução
 
 ```bash
-chmod +x LotoLogic_4.2.6_amd64.AppImage
-./LotoLogic_4.2.6_amd64.AppImage
+chmod +x LotoLogic_4.2.7_amd64.AppImage
+./LotoLogic_4.2.7_amd64.AppImage
 ```
 
 ---
@@ -440,12 +440,12 @@ O LotoLogic foi desenvolvido com **privacidade por design**:
 
 **Linux (.deb):**
 ```bash
-sudo dpkg -i LotoLogic_4.2.6_amd64.deb
+sudo dpkg -i LotoLogic_4.2.7_amd64.deb
 ```
 
 **Linux (AppImage):**
 ```bash
-chmod +x LotoLogic_4.2.6_amd64.AppImage && ./LotoLogic_4.2.6_amd64.AppImage
+chmod +x LotoLogic_4.2.7_amd64.AppImage && ./LotoLogic_4.2.7_amd64.AppImage
 ```
 
 ---
@@ -472,7 +472,7 @@ O LotoLogic é desenvolvido de forma independente, com muito café e muitas hora
 
 ## 📋 Changelog
 
-### v4.2.6
+### v4.2.7
 - Preços das apostas atualizados conforme tabela CAIXA 2026 (reajuste julho/2025)
 - Super Sete: range estendido de 15 para 21 dezenas
 - Dia de Sorte: fórmula de preços corrigida para cálculo exato
@@ -533,6 +533,6 @@ Se o LotoLogic te ajudou, me siga nas redes — isso ajuda muito a manter o proj
 ---
 
 <div align="center">
-  <strong>LotoLogic v4.2.6</strong><br/>
+  <strong>LotoLogic v4.2.7</strong><br/>
   Feito com ❤️ para apostadores sérios
 </div>
