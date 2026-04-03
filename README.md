@@ -6,7 +6,7 @@
   <p><strong>O laboratório de análise de loterias da CAIXA mais completo para apostadores sérios.</strong><br/>
   Dados reais · Algoritmos profissionais · Inteligência Artificial · 100% local</p>
 
-  <img src="https://img.shields.io/badge/versão-4.2.7-blue?style=flat-square" />
+  <img src="https://img.shields.io/badge/versão-4.2.8-blue?style=flat-square" />
   <img src="https://img.shields.io/badge/plataforma-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey?style=flat-square" />
   <img src="https://img.shields.io/badge/licença-MIT-green?style=flat-square" />
 </div>
@@ -23,16 +23,16 @@
 
 | Plataforma | Instalador | Tipo |
 |---|---|---|
-| 🪟 **Windows 10/11** | [LotoLogic_4.2.7_x64-setup.exe](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.7/LotoLogic_4.2.7_x64-setup.exe) | Setup (recomendado) |
-| 🪟 **Windows 10/11** | [LotoLogic_4.2.7_x64_en-US.msi](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.7/LotoLogic_4.2.7_x64_en-US.msi) | MSI |
-| 🍎 **macOS Apple Silicon** (M1/M2/M3/M4) | [LotoLogic_4.2.7_aarch64.dmg](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.7/LotoLogic_4.2.7_aarch64.dmg) | DMG |
-| 🍎 **macOS Intel** | [LotoLogic_4.2.7_x64.dmg](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.7/LotoLogic_4.2.7_x64.dmg) | DMG |
-| 🐧 **Linux** (Ubuntu, Debian, Mint...) | [LotoLogic_4.2.7_amd64.deb](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.7/LotoLogic_4.2.7_amd64.deb) | .deb |
-| 🐧 **Linux** (qualquer distribuição) | [LotoLogic_4.2.7_amd64.AppImage](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.7/LotoLogic_4.2.7_amd64.AppImage) | AppImage |
+| 🪟 **Windows 10/11** | [LotoLogic_4.2.8_x64-setup.exe](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.8/LotoLogic_4.2.8_x64-setup.exe) | Setup (recomendado) |
+| 🪟 **Windows 10/11** | [LotoLogic_4.2.8_x64_en-US.msi](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.8/LotoLogic_4.2.8_x64_en-US.msi) | MSI |
+| 🍎 **macOS Apple Silicon** (M1/M2/M3/M4) | [LotoLogic_4.2.8_aarch64.dmg](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.8/LotoLogic_4.2.8_aarch64.dmg) | DMG |
+| 🍎 **macOS Intel** | [LotoLogic_4.2.8_x64.dmg](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.8/LotoLogic_4.2.8_x64.dmg) | DMG |
+| 🐧 **Linux** (Ubuntu, Debian, Mint...) | [LotoLogic_4.2.8_amd64.deb](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.8/LotoLogic_4.2.8_amd64.deb) | .deb |
+| 🐧 **Linux** (qualquer distribuição) | [LotoLogic_4.2.8_amd64.AppImage](https://github.com/dantetesta/LotoLogic/releases/download/v4.2.8/LotoLogic_4.2.8_amd64.AppImage) | AppImage |
 
 > 💡 **Mac:** No menu Apple → "Sobre este Mac" — se aparecer "Apple M..." baixe Silicon. Se aparecer "Intel" baixe a versão Intel.
 >
-> 🐧 **Linux AppImage:** `chmod +x LotoLogic_4.2.7_amd64.AppImage && ./LotoLogic_4.2.7_amd64.AppImage`
+> 🐧 **Linux AppImage:** `chmod +x LotoLogic_4.2.8_amd64.AppImage && ./LotoLogic_4.2.8_amd64.AppImage`
 
 ---
 
@@ -45,7 +45,7 @@ Esse erro é causado pelo Gatekeeper do macOS porque o app não possui assinatur
 **1. Remova o atributo de quarentena antes de instalar:**
 
 ```bash
-xattr -cr ~/Downloads/LotoLogic_4.2.7_aarch64.dmg
+xattr -cr ~/Downloads/LotoLogic_4.2.8_aarch64.dmg
 ```
 
 Depois abra o DMG normalmente e arraste para Applications.
@@ -70,8 +70,8 @@ Clique em **Mais informações** → **Executar assim mesmo**.
 ### Linux AppImage — permissão de execução
 
 ```bash
-chmod +x LotoLogic_4.2.7_amd64.AppImage
-./LotoLogic_4.2.7_amd64.AppImage
+chmod +x LotoLogic_4.2.8_amd64.AppImage
+./LotoLogic_4.2.8_amd64.AppImage
 ```
 
 ---
@@ -440,12 +440,12 @@ O LotoLogic foi desenvolvido com **privacidade por design**:
 
 **Linux (.deb):**
 ```bash
-sudo dpkg -i LotoLogic_4.2.7_amd64.deb
+sudo dpkg -i LotoLogic_4.2.8_amd64.deb
 ```
 
 **Linux (AppImage):**
 ```bash
-chmod +x LotoLogic_4.2.7_amd64.AppImage && ./LotoLogic_4.2.7_amd64.AppImage
+chmod +x LotoLogic_4.2.8_amd64.AppImage && ./LotoLogic_4.2.8_amd64.AppImage
 ```
 
 ---
@@ -471,6 +471,14 @@ O LotoLogic é desenvolvido de forma independente, com muito café e muitas hora
 ---
 
 ## 📋 Changelog
+
+### v4.2.8
+- **Fix tela em branco no Mac Intel** — cores oklch() substituídas por hsl(), target de build alterado para safari14
+- **Links da página de Créditos corrigidos** — agora abrem no navegador nativo via comando Tauri
+- **Startup lento na segunda abertura** — importação do calendário lunar otimizada com batches
+- **Analytics melhorado** — evento `first_install` no onboarding, versão dinâmica, conformidade GA4
+- Nova imagem de entrada no onboarding e créditos
+- CI/CD agora cria Release automaticamente com todos os instaladores
 
 ### v4.2.7
 - Site oficial **lotologic.com.br** adicionado à página de Créditos
@@ -549,6 +557,6 @@ Se o LotoLogic te ajudou, me siga nas redes — isso ajuda muito a manter o proj
 ---
 
 <div align="center">
-  <strong>LotoLogic v4.2.7</strong><br/>
+  <strong>LotoLogic v4.2.8</strong><br/>
   Feito com ❤️ para apostadores sérios
 </div>
