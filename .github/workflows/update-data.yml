@@ -218,7 +218,7 @@ jobs:
 
             PGPASSWORD="$SUPABASE_DB_PASSWORD" psql \
               -h "$SUPABASE_DB_HOST" \
-              -p 5432 \
+              -p 54320 \
               -U postgres \
               -d postgres \
               -f "/tmp/${LOT}_pg.sql" \
@@ -231,7 +231,7 @@ jobs:
           echo "=== TOTAIS NO SUPABASE ==="
           PGPASSWORD="$SUPABASE_DB_PASSWORD" psql \
             -h "$SUPABASE_DB_HOST" \
-            -p 5432 \
+            -p 54320 \
             -U postgres \
             -d postgres \
             -c "SELECT loteria, COUNT(*) as total FROM resultados GROUP BY loteria ORDER BY total DESC;"
