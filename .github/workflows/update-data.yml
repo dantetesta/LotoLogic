@@ -141,3 +141,97 @@ jobs:
             gh release upload data "$f" --clobber --repo dantetesta/LotoLogic
           done
           echo "Concluido"
+
+      - name: Sincronizar dados com Supabase PostgreSQL
+        env:
+          SUPABASE_DB_HOST: ${{ secrets.SUPABASE_DB_HOST }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+        run: |
+          sudo apt-get install -y postgresql-client -qq
+
+          LOTERIAS="megasena lotofacil quina lotomania maismilionaria duplasena timemania diadesorte supersete"
+
+          for LOT in $LOTERIAS; do
+            echo "=== Sincronizando $LOT com Supabase ==="
+
+            python3 - "$LOT" << 'PYEOF'
+          import re, json, sys
+
+          lot = sys.argv[1]
+          sql_file = f"loterias/{lot}.sql"
+          out_file = f"/tmp/{lot}_pg.sql"
+
+          with open(sql_file, "r") as f:
+              content = f.read()
+
+          lines = content.split("\n")
+          count = 0
+          sql_out = []
+
+          for line in lines:
+              if not line.startswith("INSERT OR IGNORE INTO contests"):
+                  continue
+              m = re.search(r"VALUES\('([^']+)',(\d+),'([^']*)',(?:'([^']*)'|NULL),(?:'([^']*)'|NULL),'(\[[^\]]+\])','([^']*)',(\d+)", line)
+              if not m:
+                  continue
+              game_type = m.group(1)
+              concurso = int(m.group(2))
+              data_str = m.group(3)
+              nums_json = m.group(6)
+              acumulou = m.group(8) == "1"
+              try:
+                  nums = json.loads(nums_json)
+              except:
+                  continue
+              raw_match = re.search(r",'(\{.*?\})',(NULL|'[^']*'),(NULL|'[^']*'),(NULL|'[^']*')\);", line)
+              ganhadores_list = []
+              premio = 0
+              if raw_match:
+                  try:
+                      raw = json.loads(raw_match.group(1).replace("''", "'"))
+                      for p in raw.get("premiacoes", []):
+                          ganhadores_list.append({
+                              "faixa": p.get("descricao", ""),
+                              "ganhadores": int(p.get("ganhadores", 0)),
+                              "premio": float(p.get("valorPremio", 0))
+                          })
+                  except:
+                      pass
+              data_pg = "NULL"
+              if data_str and "/" in data_str:
+                  parts = data_str.split("/")
+                  if len(parts) == 3:
+                      data_pg = f"'{parts[2]}-{parts[1]}-{parts[0]}'"
+              nums_pg = json.dumps(nums)
+              ganh_pg = json.dumps(ganhadores_list).replace("'", "''")
+              sql_out.append(
+                  f"INSERT INTO resultados (loteria, concurso, data, numeros, premio_acumulado, acumulou, ganhadores) "
+                  f"VALUES ('{game_type}', {concurso}, {data_pg}, '{nums_pg}', {premio}, {str(acumulou).lower()}, '{ganh_pg}') "
+                  f"ON CONFLICT (loteria, concurso) DO NOTHING;"
+              )
+              count += 1
+
+          with open(out_file, "w") as f:
+              f.write("\n".join(sql_out))
+          print(f"  {count} concursos preparados para {lot}")
+          PYEOF
+
+            PGPASSWORD="$SUPABASE_DB_PASSWORD" psql \
+              -h "$SUPABASE_DB_HOST" \
+              -p 5432 \
+              -U postgres \
+              -d postgres \
+              -f "/tmp/${LOT}_pg.sql" \
+              -q 2>&1 | tail -1
+
+            echo "  $LOT sincronizado!"
+          done
+
+          echo ""
+          echo "=== TOTAIS NO SUPABASE ==="
+          PGPASSWORD="$SUPABASE_DB_PASSWORD" psql \
+            -h "$SUPABASE_DB_HOST" \
+            -p 5432 \
+            -U postgres \
+            -d postgres \
+            -c "SELECT loteria, COUNT(*) as total FROM resultados GROUP BY loteria ORDER BY total DESC;"
